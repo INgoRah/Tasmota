@@ -99,7 +99,8 @@ Arduino_ST7789::Arduino_ST7789(int8_t dc, int8_t rst, int8_t cs, int8_t bp)
 
 void Arduino_ST7789::DisplayInit(int8_t p,int8_t size,int8_t rot,int8_t font) {
   setRotation(rot);
-  if (_width==320 || _height==320) {
+  if (_width==320 || _height==320 ||
+      (_width==ST7735_TFTWIDTH && _height==ST7735_TFTHEIGHT)) {
     invertDisplay(false);
   } else {
     invertDisplay(true);

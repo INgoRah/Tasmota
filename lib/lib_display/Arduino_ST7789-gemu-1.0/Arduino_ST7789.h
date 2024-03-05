@@ -61,6 +61,18 @@
 #define ST7789_135x240_XSTART_R3 40
 #define ST7789_135x240_YSTART_R3 53
 
+// for 1.44 and mini
+#define ST7735_TFTWIDTH_128  128
+// for mini
+#define ST7735_TFTWIDTH_80   80
+// for 1.44" display
+#define ST7735_TFTHEIGHT_128 128
+// for 1.8" and mini display
+#define ST7735_TFTHEIGHT_160  160
+
+#define ST7735_TFTWIDTH  ST7735_TFTWIDTH_128
+#define ST7735_TFTHEIGHT ST7735_TFTHEIGHT_160
+
 #define ST_CMD_DELAY   0x80    // special signifier for command lists
 
 #define ST7789_NOP     0x00
@@ -90,7 +102,11 @@
 #define ST7789_MADCTL_MX  0x40
 #define ST7789_MADCTL_MV  0x20
 #define ST7789_MADCTL_ML  0x10
+#ifdef USE_DISPLAY_ST7735
+#define ST7789_MADCTL_RGB 0x08
+#else
 #define ST7789_MADCTL_RGB 0x00
+#endif
 
 #define ST7789_RDID1   0xDA
 #define ST7789_RDID2   0xDB
@@ -112,24 +128,39 @@
 
 // Color definitions
 #define ST7789_BLACK       0x0000      /*   0,   0,   0 */
-#define ST7789_NAVY        0x000F      /*   0,   0, 128 */
 #define ST7789_DARKGREEN   0x03E0      /*   0, 128,   0 */
-#define ST7789_DARKCYAN    0x03EF      /*   0, 128, 128 */
-#define ST7789_MAROON      0x7800      /* 128,   0,   0 */
 #define ST7789_PURPLE      0x780F      /* 128,   0, 128 */
-#define ST7789_OLIVE       0x7BE0      /* 128, 128,   0 */
 #define ST7789_LIGHTGREY   0xC618      /* 192, 192, 192 */
 #define ST7789_DARKGREY    0x7BEF      /* 128, 128, 128 */
-#define ST7789_BLUE        0x001F      /*   0,   0, 255 */
 #define ST7789_GREEN       0x07E0      /*   0, 255,   0 */
+#define ST7789_MAGENTA     0xF81F      /* 255,   0, 255 */
+#define ST7789_WHITE       0xFFFF      /* 255, 255, 255 */
+#define ST7789_PINK        0xF81F
+
+#ifdef USE_DISPLAY_ST7735
+/* color = blue * 2048 + green * 64 + red */
+#define ST7789_NAVY        0x7800      /*   0,   0, 128 */
+#define ST7789_DARKCYAN    0x7BE0      /*   0, 128, 128 */
+#define ST7789_MAROON      0x000F      /* 128,   0,   0 */
+#define ST7789_OLIVE       0x03EF      /* 128, 128,   0 */
+#define ST7789_BLUE        0xF800
+#define ST7789_CYAN        0xFFE0
+#define ST7789_RED         0x001F
+#define ST7789_YELLOW      0x07FF
+#define ST7789_ORANGE      0x03FF
+#define ST7789_GREENYELLOW 0x2FF5      /* 173, 255,  47  */
+#else
+#define ST7789_NAVY        0x000F      /*   0,   0, 128 */
+#define ST7789_DARKCYAN    0x03EF      /*   0, 128, 128 */
+#define ST7789_MAROON      0x7800      /* 128,   0,   0 */
+#define ST7789_OLIVE       0x7BE0      /* 128, 128,   0 */
+#define ST7789_BLUE        0x001F      /*   0,   0, 255 */
 #define ST7789_CYAN        0x07FF      /*   0, 255, 255 */
 #define ST7789_RED         0xF800      /* 255,   0,   0 */
-#define ST7789_MAGENTA     0xF81F      /* 255,   0, 255 */
 #define ST7789_YELLOW      0xFFE0      /* 255, 255,   0 */
-#define ST7789_WHITE       0xFFFF      /* 255, 255, 255 */
 #define ST7789_ORANGE      0xFD20      /* 255, 165,   0 */
 #define ST7789_GREENYELLOW 0xAFE5      /* 173, 255,  47 */
-#define ST7789_PINK        0xF81F
+#endif
 
 
 class Arduino_ST7789 : public Renderer {
